@@ -230,7 +230,7 @@ class TickerBase():
         df.index = df.index.tz_localize("UTC").tz_convert(
             data["chart"]["result"][0]["meta"]["exchangeTimezoneName"])
 
-        if params["interval"][-1] == "m":
+        if params["interval"][-1] == "m" or params["interval"][-1] == "h":
             df.index.name = "Datetime"
         else:
             df.index = _pd.to_datetime(df.index.date)
@@ -504,7 +504,7 @@ class TickerBase():
         search_str = '"{}|'.format(ticker)
         if search_str not in data:
             if q.lower() in data.lower():
-                search_str = '"|'
+                search_str = '"|'.format(ticker)
                 if search_str not in data:
                     self._isin = '-'
                     return self._isin

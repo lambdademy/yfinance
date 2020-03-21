@@ -83,8 +83,8 @@ def auto_adjust(data):
         "Adj Low": "Low", "Adj Close": "Close"
     }, inplace=True)
 
-    df = df[["Open", "High", "Low", "Close", "Volume"]]
-    return df[["Open", "High", "Low", "Close", "Volume"]]
+    df = df[["Open", "High", "Low", "Close", "Volume", "timestamp"]]
+    return df[["Open", "High", "Low", "Close", "Volume", "timestamp"]]
 
 
 def back_adjust(data):
@@ -121,7 +121,9 @@ def parse_quotes(data, tz=None):
     if "adjclose" in data["indicators"]:
         adjclose = data["indicators"]["adjclose"][0]["adjclose"]
 
-    quotes = _pd.DataFrame({"Open": opens,
+    quotes = _pd.DataFrame({
+                            "timestamp": timestamps,
+                            "Open": opens,
                             "High": highs,
                             "Low": lows,
                             "Close": closes,
